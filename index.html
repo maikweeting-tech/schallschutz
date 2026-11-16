@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Schallschutz-Assistent</title>
+<meta name="description" content="Lernen, Rechnen und Baustellen-Checkliste zum Schallschutz nach DIN 4109 / VDI 4100">
+<meta name="theme-color" content="#1F4E79">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Schallschutz">
+<link rel="stylesheet" href="app.css?v=1">
+<script>
+  /* Theme vor dem ersten Zeichnen setzen (kein Aufblitzen). */
+  try { var t = JSON.parse(localStorage.getItem('ssa.einstellungen') || '{}').theme; if (t === 'hell') document.documentElement.dataset.theme = 'light'; if (t === 'dunkel') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
+</script>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <a id="zurueck" class="topbar-back" href="#/start" aria-label="Zurück" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </a>
+    <div class="topbar-titel">
+      <div id="titel">Schallschutz-Assistent</div>
+      <div id="untertitel" class="topbar-sub">DIN 4109 · VDI 4100</div>
+    </div>
+  </header>
+  <div id="speicherhinweis" class="banner" hidden>Speicher nicht verfügbar – Eingaben gehen beim Schließen verloren.</div>
+  <main id="main" tabindex="-1"></main>
+  <nav class="bottomnav" aria-label="Hauptnavigation">
+    <a href="#/start" data-nav="start"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Start</span></a>
+    <a href="#/lernen" data-nav="lernen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2zM4 20a2 2 0 0 0 2 1h13v-3"/><path d="M9 8h6M9 11h4"/></svg><span>Lernen</span></a>
+    <a href="#/rechnen" data-nav="rechnen"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></svg><span>Rechnen</span></a>
+    <a href="#/checkliste" data-nav="checkliste"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6l1.5 1.5L7.5 5M3.5 12l1.5 1.5 2.5-2.5M3.5 18l1.5 1.5 2.5-2.5"/></svg><span>Checkliste</span></a>
+    <a href="#/mehr" data-nav="mehr"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><span>Mehr</span></a>
+  </nav>
+</div>
+
+<!-- Projektkopf für Berichte -->
+<dialog id="dlg-kopf">
+  <form method="dialog" class="dlg">
+    <h2>Bericht exportieren</h2>
+    <p class="hinweis">Der Bericht öffnet die Druckansicht – dort „Als PDF speichern" wählen.</p>
+    <label>Projekt<input name="projekt" autocomplete="off"></label>
+    <label>Bearbeiter<input name="bearbeiter" autocomplete="name"></label>
+    <label>Datum<input name="datum" type="date"></label>
+    <div class="dlg-knoepfe">
+      <button value="abbrechen" class="btn btn-sekundaer" formnovalidate>Abbrechen</button>
+      <button value="ok" class="btn btn-primaer">Drucken / PDF</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="print" aria-hidden="true"></div>
+
+<script src="data.js?v=1"></script>
+<script src="calc.js?v=1"></script>
+<script src="app.js?v=1"></script>
+</body>
+</html>

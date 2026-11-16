@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selbsttest · Schallschutz-Assistent</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font: 15px/1.5 system-ui, "Segoe UI", sans-serif; margin: 0; padding: 16px; max-width: 860px; margin-inline: auto; background: Canvas; color: CanvasText; }
+  h1 { font-size: 1.3rem; } .ok { color: #2F6F43; } .nok { color: #A33232; font-weight: 700; }
+  li { margin: 3px 0; font-family: ui-monospace, Consolas, monospace; font-size: .88rem; }
+  #summe { font-size: 1.1rem; font-weight: 700; padding: 10px 14px; border-radius: 8px; }
+  a { display: inline-block; min-height: 48px; line-height: 48px; }
+</style>
+</head>
+<body>
+<h1>Selbsttest der Rechenlogik und Fachdaten</h1>
+<p id="summe">läuft …</p>
+<ol id="liste"></ol>
+<a href="./index.html#/rechnen">← zurück zur App</a>
+<script src="data.js?v=1"></script>
+<script src="calc.js?v=1"></script>
+<script src="tests.js?v=1"></script>
+<script>
+  var erg = window.SSA_TESTS();
+  var ok = erg.filter(function (e) { return e.ok; }).length;
+  document.getElementById('liste').innerHTML = erg.map(function (e) {
+    return '<li class="' + (e.ok ? 'ok' : 'nok') + '">' + (e.ok ? '✓ ' : '✕ ') + e.name.replace(/</g, '&lt;') + (e.ok ? '' : ' — erhalten: ' + String(e.ist).replace(/</g, '&lt;')) + '</li>';
+  }).join('');
+  var s = document.getElementById('summe');
+  s.textContent = ok + ' von ' + erg.length + ' Prüfungen bestanden';
+  s.className = ok === erg.length ? 'ok' : 'nok';
+</script>
+</body>
+</html>
